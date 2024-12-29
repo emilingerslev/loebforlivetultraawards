@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Løb for Livet Ultra Awards</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@mui/material@5.15.3/umd/material-ui.development.js"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" />
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #root {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .preview-box {
+            white-space: pre-wrap;
+            font-family: monospace;
+            background-color: #f8f9fa;
+            padding: 16px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+        const {
+            Box,
+            Container,
+            Typography,
+            Radio,
+            RadioGroup,
+            FormControlLabel,
+            FormControl,
+            FormLabel,
+            Paper,
+            Button,
+            ThemeProvider,
+            createTheme,
+            CssBaseline
+        } = MaterialUI;
+
+        const theme = createTheme({
+            palette: {
+                primary: {
+                    main: '#1976d2',
+                },
+                background: {
+                    default: '#f5f5f5',
+                    paper: '#ffffff',
+                }
+            },
+        });
+
+        const podcasts = [
+            {
+                name: "Spotify",
+                url: "https://open.spotify.com/show/6asAwK7wPeBMB6xpJaxHVz",
+                episodes: [
+                    { no: 111, url: "https://open.spotify.com/episode/161Weg2iEz37L4K9Bk4Dte" },
+                    { no: 112, url: "https://open.spotify.com/episode/4smdY3uAY7xghJPrt6foUA" }
+                ],
+            },
+            {
+                name: "Apple Podcasts",
+                url: "https://podcasts.apple.com/dk/podcast/l%C3%B8b-for-livet/id1716239138",
+                episodes: [
+                    { no: 111, url: "https://podcasts.apple.com/dk/podcast/111-l%C3%B8b-for-livet-ultra-awards/id1716239138?i=1000681959217" },
+                    { no: 112, url: "https://podcasts.apple.com/dk/podcast/112-l%C3%B8b-for-livet-ultra-awards-del-2/id1716239138?i=1000681959318" }
+                ],
+            },
+            {
+                name: "Podimo",
+                url: "https://podimo.com/dk/shows/lob-for-livet",
+                episodes: [],
+            },
+            {
+                name: "Spotify Creators",
+                url: "https://creators.spotify.com/pod/show/lflm",
+                episodes: [
+                    { no: 111, url: "https://creators.spotify.com/pod/show/lflm/episodes/111-Lb-For-Livet-Ultra-Awards-e2sqsim" },
+                    { no: 112, url: "https://creators.spotify.com/pod/show/lflm/episodes/112-Lb-For-Livet-Ultra-Awards-Del-2-e2sqtfm" }
+                ],
+            },
+        ]
+
+        const categories = [
+            {
+                name: 'Årets ultrapræstation',
+                options: [
+                    'Stine Rex',
+                    'Emil Krog Ingerslev',
+                    'Michael Jeppesen Guldbamsen',
+                    'Max Boderskov',
+                    'Bouchra Lundgren Eriksen',
+                    'Mads Lund Skaaning'
+                ]
+            },
+            {
+                name: 'Årets Ultrapræstation Kvinder',
+                options: [
+                    'Stine Rex',
+                    'Bouchra Lundgren Eriksen',
+                    'Emma Malene Lemminger',
+                    'Lisbeth Billeskov',
+                    'Katja Lykke Tonstad',
+                    'Begitte Hansen',
+                    'Tina Andersen'
+                ]
+            },
+            {
+                name: 'Årets Ultrapræstation Mænd',
+                options: [
+                    'Emil Krog Ingerslev',
+                    'Søren Møller',
+                    'Rasmus Boje Vendelbo Juliussen',
+                    'Mads Lund Skaaning',
+                    'Max Boderskov',
+                    'Michael Jeppesen Guldbamsen',
+                    'David Stoltenborg',
+                    'Anders Aagaard'
+                ]
+            },
+            {
+                name: 'Årets Race Director',
+                options: [
+                    'Morten Klingenberg',
+                    'Simon Grimstrup',
+                    'Dollerup Trail',
+                    'Louise Kjeldmann',
+                    'Mark Andersen',
+                    'Kim Rasmussen',
+                    'Jon, Bo og Martin (trailrunning Silkeborg)',
+                    'Thomas Lønbæk',
+                    'Jann Søndergaard',
+                    'Casper Johnny Poulsen'
+                ]
+            },
+            {
+                name: 'Årets løbeevent',
+                options: [
+                    'Smil Løbet 6 dage i Aabybro',
+                    'Run Around Denmark 2024',
+                    'Skanderborg Ultra',
+                    '24 timer ved havet',
+                    'Mors 100 miles',
+                    'Cold Hawaii Ultra',
+                    'Brooks OUT DM lang trail',
+                    'Hammer Trail',
+                    'Dollerup Trail',
+                    'Endure Trail'
+                ]
+            },
+            {
+                name: 'Årets Hårdeste Løb',
+                options: [
+                    'Den Norske Mil',
+                    'Everesting.dk',
+                    'Bakkely Maratons',
+                    'Lillebælt 55',
+                    'Høfde Ultra Trail',
+                    'Endure Trail'
+                ]
+            },
+            {
+                name: 'Årets Backyard Ultra',
+                options: [
+                    'Wayout Backyard Ultra',
+                    'Horsens Backyard Ultra',
+                    'Run O\'clock Backyard Ultra',
+                    'Love Nature Backyard Ultra',
+                    'Backyard Teams',
+                    'Bornholms Backyard Ultra'
+                ]
+            },
+            {
+                name: 'Årets Ultra Spirit',
+                options: [
+                    'Tommy Jacobsen',
+                    'Emma Anita Bergmann Hansen',
+                    'Tina Andersen',
+                    'Selma Berk Damsgaard',
+                    'Morten Lennert',
+                    'Jesper Reiffenstein Kristensen',
+                    'Katja Bjerre',
+                    'Lars Vædeled Roed'
+                ]
+            },
+            {
+                name: 'Årets Gennembrud/talent',
+                options: [
+                    'Lars Mose',
+                    'Mads Emil Jensen',
+                    'Mads Lund Skaaning',
+                    'Poul Lundgren Rasmussen',
+                    'Anna Søgaard Hanusova',
+                    'Emma Lemminger',
+                    'Benjamin Friis Hansen'
+                ]
+            }
+        ];
+
+        function App() {
+            const validateSelection = (category, selection) => {
+                const categoryData = categories.find(cat => cat.name === category);
+                if (!categoryData) return 'ikke valgt';
+                if (selection === 'ikke valgt') return selection;
+                return categoryData.options.includes(selection) ? selection : 'ikke valgt';
+            };
+
+            const [selections, setSelections] = useState(() => {
+                // Try to get selections from URL parameters
+                const params = new URLSearchParams(window.location.search);
+                const savedSelections = params.get('selections');
+                if (savedSelections) {
+                    try {
+                        const parsed = JSON.parse(atob(savedSelections));
+                        // Validate each selection
+                        return Object.fromEntries(
+                            Object.entries(parsed).map(([category, selection]) => [
+                                category,
+                                validateSelection(category, selection)
+                            ])
+                        );
+                    } catch (e) {
+                        console.error('Failed to parse selections from URL:', e);
+                    }
+                }
+                // Default selections if none in URL
+                return Object.fromEntries(categories.map(cat => [cat.name, 'ikke valgt']));
+            });
+
+            const updateURL = (newSelections) => {
+                const encoded = btoa(JSON.stringify(newSelections));
+                const url = new URL(window.location.href);
+                url.searchParams.set('selections', encoded);
+                window.history.replaceState({}, '', url.toString());
+            };
+
+            const handleChange = (category, value) => {
+                const newSelections = {
+                    ...selections,
+                    [category]: validateSelection(category, value)
+                };
+                setSelections(newSelections);
+                updateURL(newSelections);
+            };
+
+            const generateEmailBody = () => {
+                return Object.entries(selections)
+                    .map(([category, selection]) => `${category}: ${selection}`)
+                    .join('\n');
+            };
+
+            const getMailtoLink = () => {
+                const body = generateEmailBody();
+                return `mailto:loebforlivetultraawards@gmail.com?subject=Stemme til Ultraawards&body=${encodeURIComponent(body)}`;
+            };
+
+            const getShareableLink = () => {
+                const encoded = btoa(JSON.stringify(selections));
+                const url = new URL(window.location.href);
+                url.searchParams.set('selections', encoded);
+                return url.toString();
+            };
+
+            const copyShareableLink = async () => {
+                const link = getShareableLink();
+                try {
+                    await navigator.clipboard.writeText(link);
+                    // You might want to show a success message here
+                } catch (err) {
+                    console.error('Failed to copy link:', err);
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = link;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                }
+            };
+
+            const copyContentToClipboard = async (content) => {
+                try {
+                    await navigator.clipboard.writeText(content);
+                } catch (err) {
+                    console.error('Failed to copy content to clipboard:', err);
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = content;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                }
+            };
+
+            return (
+                <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <Container maxWidth="md">
+                        <Box sx={{ pb: 4 }}>
+                            <Paper
+                                elevation={1}
+                                sx={{ p: 3, mb: 2, borderRadius: 1 }}
+                            >
+                                <Typography variant="h3" component="h1" gutterBottom align="center" sx={{ mt: 4 }}>
+                                    Løb for Livet Ultra Awards
+                                </Typography>
+                                <Typography variant="h4" component="h2" gutterBottom align="center" sx={{ mb: 4 }}>
+                                    hjælpeværktøjet
+                                </Typography>
+                                <Typography variant="body1">
+                                    Velkommen til <i>løb for livet Ultra Awards - hjælpeværktøjet</i><br />
+                                    Dette er blot et lille hjælpeværktøj til at hjælpe dig med at stemme for de ultrapræstationer der er blevet nominreret i år. <br />
+                                    Find podcasten om de nominerede ultrapræstationer her:
+                                    <ul>
+                                        {podcasts.map((podcast, index) => (
+                                            <li key={index}>
+                                                <a href={podcast.url} target="_blank" rel="noopener noreferrer">
+                                                    {podcast.name}
+                                                </a>
+                                                {podcast.episodes.length > 0 && (
+                                                    <span> (
+                                                        {podcast.episodes.map((episode, epIndex) => (
+                                                            <span key={epIndex}>
+                                                                <a href={episode.url} target="_blank" rel="noopener noreferrer">
+                                                                    {episode.no}
+                                                                </a>
+                                                                {epIndex < podcast.episodes.length - 1 ? ', ' : ''}
+                                                            </span>
+                                                        ))}
+                                                        )</span>
+                                                )}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    Du kan stemme helt normmalt ved blot at sende en email, eller bruge dette hjælpeværktøj til at lave din email. Udfyld skemaet under og brug værktøjerne i bunden til at sende din email.<br />
+                                </Typography>
+                            </Paper>
+
+                            {categories.map((category, idx) => (
+                                <Paper
+                                    key={idx}
+                                    elevation={1}
+                                    sx={{ p: 3, mb: 2, borderRadius: 1 }}
+                                >
+                                    <FormControl component="fieldset">
+                                        <FormLabel component="legend">
+                                            <Typography variant="h5" gutterBottom>
+                                                {category.name}
+                                            </Typography>
+                                        </FormLabel>
+                                        <RadioGroup
+                                            value={selections[category.name]}
+                                            onChange={(e) => handleChange(category.name, e.target.value)}
+                                        >
+                                            <FormControlLabel
+                                                value="ikke valgt"
+                                                control={<Radio />}
+                                                label="Ikke valgt"
+                                                sx={{
+                                                    '& .MuiFormControlLabel-label': {
+                                                        color: 'text.disabled'
+                                                    }
+                                                }}
+                                            />
+                                            {category.options.map((option, optIdx) => (
+                                                <FormControlLabel
+                                                    key={optIdx}
+                                                    value={option}
+                                                    control={<Radio />}
+                                                    label={option}
+                                                />
+                                            ))}
+                                        </RadioGroup>
+                                    </FormControl>
+                                </Paper>
+                            ))}
+
+                            <Paper elevation={1} sx={{ p: 3, mb: 2, borderRadius: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                                <Typography variant="h3" gutterBottom>
+                                    Stemme email
+                                </Typography>
+                                <Typography variant="body1" gutterBottom>
+                                    Forklaring:<br />Send denne email til <a href="mailto:loebforlivetultraawards@gmail.com">loebforlivetultraawards@gmail.com</a> med indholdet herunder.
+                                    Enten kopierer du teksten herunder og indsætter det i din email eller brug email-linket nedenfor til åbne dit email program 🤓
+                                </Typography>
+                                <Typography variant="h5" gutterBottom>
+                                    Indhold af stemme email
+                                </Typography>
+                                <Box className="preview-box">
+                                    {generateEmailBody()}
+                                </Box>
+                                <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
+                                    <Button
+                                        onClick={() => copyContentToClipboard('loebforlivetultraawards@gmail.com')}
+                                        variant="contained"
+                                        fullWidth
+                                        size="large">
+                                        Kopier email adresse
+                                    </Button>
+                                    <Button
+                                        onClick={() => copyContentToClipboard('Stemme til Ultraawards')}
+                                        variant="contained"
+                                        fullWidth
+                                        size="large">
+                                        Kopier emne
+                                    </Button>
+                                    <Button
+                                        onClick={() => copyContentToClipboard(generateEmailBody())}
+                                        variant="contained"
+                                        fullWidth
+                                        size="large">
+                                        Kopier email tekst
+                                    </Button>
+                                </Box>
+                                <Typography variant="h5" sx={{ mt: 2, textAlign: 'center' }}>
+                                    ELLER
+                                </Typography>
+                                <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
+                                    <Button
+                                        variant="contained"
+                                        size="large"
+                                        fullWidth
+                                        onClick={() => window.location.href = getMailtoLink()}
+                                    >
+                                        Åben email program med udfyldt stemme email
+                                    </Button>
+                                </Box>
+                            </Paper>
+
+                        </Box>
+                    </Container>
+                </ThemeProvider>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
